@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.47] - 2026-09-27
+
+### Changed
+- **The AI response now appears below the "Ask AI" button** (was above it) on
+  both the live page (`#message-out` / `#chat-stats` in `#aichatbox`) and the
+  display/visualize page (`#viz-message-out` / `#viz-chat-stats`), so the
+  controls come first and the answer sits directly underneath.
+- **Selected-code highlight uses the OPT_Mentor light-blue** (`#c8e1ff`)
+  instead of the CodeMirror 6 default lavender. The selection span
+  (`.cm-selectionBackground`) is set explicitly and `.cm-content` is kept
+  transparent so the selection layer (which CM6 paints behind the glyphs) stays
+  visible.
+
 ## [0.3.46] - 2026-09-01
 
 ### Fixed

@@ -388,4 +388,14 @@ textarea.bubbleInputText {
 #codeInputPane .cm-scroller {
   overflow: auto;
 }
+/* Selected-code highlight. CM6 draws the selection as a .cm-selectionBackground
+   span behind the glyphs, so set that span's color (matching the OPT_Mentor
+   family) rather than relying on the browser default. */
+#codeInputPane .cm-selectionBackground {
+  background: #c8e1ff !important;
+}
+#codeInputPane .cm-content {
+  /* Keep transparent so the selection layer behind it stays visible. */
+  background: transparent;
+}
 

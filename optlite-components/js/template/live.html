@@ -123,8 +123,9 @@
             </div>
 
             <div id="aichatbox">
-              <p id="message-out" class="hidden"></p>
-              <p id="chat-stats" class="hidden"></p>
+              <!-- The AI response (#message-out / #chat-stats) is moved to just
+                   below the "Ask AI" button (further down) so the controls come
+                   first and the answer sits directly underneath. -->
             
               <!-- Sampling temperature: shared by local WebLLM and API (getUiTemperature()); default 1.0, max 1.5. -->
 
@@ -154,6 +155,11 @@
               </div>
 
               <button id="askAI" disabled>Ask AI</button>
+
+              <!-- AI response + stats, directly BELOW the "Ask AI" button
+                   (moved from the top of #aichatbox). -->
+              <p id="message-out" class="hidden"></p>
+              <p id="chat-stats" class="hidden"></p>
 
               <!-- Compact status bar (always visible) -->
               <div id="ai-status-bar" style="display: block; margin-top: 10px; padding: 6px 10px; background: #f0f7ff; border: 1px solid #d0e0ff; border-radius: 4px; font-size: 9pt;">
