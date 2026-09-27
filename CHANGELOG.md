@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.48] - 2026-09-27
+
+### Added
+- **New layout shell (shared by the Display and Live Edit pages)**, matching the
+  OPT_Mentor experience:
+  - A **pinned nav bar** with the brand, **Default Mode / Live Edit** tabs
+    (same-tab switch), a **Permalink** button (copies the share link to the
+    clipboard, no input box), and a **theme toggle**. The old in-page Permalink
+    button + URL box are hidden (kept in the DOM so legacy handlers stay no-ops).
+  - The **AI chat panel moved to the bottom** of the page as a resizable band
+    (drag the seam above it to resize; double-click to reset). The main
+    code/visualizer band fills the remaining height.
+  - **Live Edit: code and visualizer are now side-by-side** — code on the
+    left, visualizer (print output / frames / objects) filling the right. The
+    Display (default) page keeps the full-width code window with the
+    visualizer stacked below it.
+- **Light / Dark / Auto theme** (the nav-bar toggle cycles Light → Dark → Auto).
+  The choice is persisted per-browser (`localStorage`) and "Auto" follows the
+  OS `prefers-color-scheme` (tracked live). The code editor, the C++ execution
+  visualizer (frames, objects, print output), the step controls, and the
+  overall chrome all re-theme. The editor swaps its syntax-highlight palette
+  between a light and a dark set (`cm-editor.ts setThemeDark`) on theme change.
+
+### Changed
+- The `#pyInputPane` code window fills the band it lives in (full width in
+  Display mode, a fixed-width left column in Live Edit) instead of a centered
+  box.
+
 ## [0.3.47] - 2026-09-27
 
 ### Changed

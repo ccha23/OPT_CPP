@@ -56,6 +56,12 @@ import { allTabsRE } from './opt-frontend';
 import { asyncRun } from './pyodide/runner';
 import { nullTraceErrorLst } from './footer-html';
 import * as d3 from 'd3';
+import { initOptShell } from './opt-shell';
+import { bindEditorTheme } from './theme';
+require('../css/opt-theme.css');
+require('../css/opt-shell.css');
+require('../css/opt-codemirror-theme.css');
+require('../css/opt-viz-theme.css');
 // (ACE removed; CodeMirror 6 provides the editor via cm-editor.ts)
 
 // const {
@@ -739,6 +745,28 @@ export class OptLiveFrontend extends OptFrontend {
 $(document).ready(function () {
   optLiveFrontend = new OptLiveFrontend({});
   //optLiveFrontend.setSurveyHTML(); // 2019-04-09 take survey off this page
+
+  // Layout shell: pinned nav bar (mode tabs + permalink + theme) + resizable
+  // bands (AI chat at the bottom, code-left/visualizer-right in the main band).
+  // Runs last so all legacy ID-based handlers are bound before we relocate nodes.
+  const buildPermalink = () => {
+    const myArgs = (optLiveFrontend as any).getAppState();
+    let urlStr = $.param.fragment(window.location.href, myArgs, 2); // 2 = override
+    return String(urlStr).replace(/\(/g, "%28").replace(/\)/g, "%29");
+  };
+  initOptShell({
+    page: "live",
+    brand: "OPT C++",
+    aiPaneId: "aichatbox",
+    buildPermalink,
+    navigate: (target) => {
+      if (target === "visualize") (optLiveFrontend as any).openVisualizeUrl();
+      else (optLiveFrontend as any).openLiveModeUrl();
+    },
+  });
+
+  // Re-paint the CM6 editor's token colors whenever the theme changes.
+  bindEditorTheme((optLiveFrontend as any).pyInputAceEditor);
 }
 
 /* // set default code if there is node 'code' parameter in the hash

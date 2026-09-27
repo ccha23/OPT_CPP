@@ -147,6 +147,27 @@ const baseHighlight = HighlightStyle.define([
   { tag: tags.propertyName, color: "#001080" },
 ]);
 
+// Dark-mode syntax highlighting — bright tokens that read well on a dark editor
+// background. Swapped in/out via the highlightCompartment when the app theme
+// changes (see OptCmEditor.setThemeDark / the shell's theme watcher).
+const darkHighlight = HighlightStyle.define([
+  { tag: tags.keyword, color: "#79c0ff", fontWeight: "bold" },
+  { tag: tags.operatorKeyword, color: "#79c0ff" },
+  { tag: tags.controlKeyword, color: "#79c0ff", fontWeight: "bold" },
+  { tag: tags.moduleKeyword, color: "#79c0ff", fontWeight: "bold" },
+  { tag: tags.definitionKeyword, color: "#79c0ff" },
+  { tag: tags.number, color: "#ffa657" },
+  { tag: tags.bool, color: "#79c0ff" },
+  { tag: tags.string, color: "#7ee787" },
+  { tag: tags.comment, color: "#8b949e", fontStyle: "italic" },
+  { tag: tags.lineComment, color: "#8b949e", fontStyle: "italic" },
+  { tag: tags.blockComment, color: "#8b949e", fontStyle: "italic" },
+  { tag: tags.typeName, color: "#d2a8ff" },
+  { tag: tags.macroName, color: "#f2cc60" },
+  { tag: tags.variableName, color: "#e6edf3" },
+  { tag: tags.propertyName, color: "#e6edf3" },
+]);
+
 // Box / rectangular selection: CM6's rectangularSelection() reacts to Alt+drag
 // by default, selecting one range (cursor) per line. Works once the
 // allowMultipleSelections facet is enabled in the extensions list below.
@@ -165,6 +186,7 @@ export class OptCmEditor {
   private view: EditorView;
   private modeCompartment = new Compartment();
   private completionCompartment = new Compartment();
+  private highlightCompartment = new Compartment();
   private opts: OptCmEditorOptions;
 
   constructor(opts: OptCmEditorOptions) {
@@ -238,7 +260,7 @@ export class OptCmEditor {
         this.completionCompartment.of(this.completionExtension(opts.mode)),
         highlightSelectionMatches(),
         boxSelect,
-        syntaxHighlighting(baseHighlight),
+        this.highlightCompartment.of(syntaxHighlighting(baseHighlight)),
         indentUnit.of("    ".padStart(tab, " ")),   // soft tabs: 4 spaces
         this.modeCompartment.of(opts.mode === "python" ? python() : cpp()),
         baseTheme,
@@ -276,6 +298,17 @@ export class OptCmEditor {
         // language extension so the two stay in sync without coupling.
         this.completionCompartment.reconfigure(this.completionExtension(mode)),
       ],
+    });
+  }
+
+  // Swap the syntax-highlight palette between light and dark (called by the
+  // layout shell whenever the app theme changes). No-op-safe on the base
+  // chrome — the dark editor background comes from CSS custom properties.
+  setThemeDark(dark: boolean) {
+    this.view.dispatch({
+      effects: this.highlightCompartment.reconfigure(
+        syntaxHighlighting(dark ? darkHighlight : baseHighlight)
+      ),
     });
   }
 
