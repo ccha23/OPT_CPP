@@ -279,6 +279,14 @@ self.addEventListener('fetch', (event) => {
       if (baseName(request.url) && KERNEL_GZ.has(baseName(request.url))) {
         hostCompression = undefined;
       }
+      // An explicit abort (AbortError) — e.g. the browser cancelling a fetch when
+      // the build-version auto-reload calls location.reload() — must not rethrow:
+      // it would surface as an unhandled "Failed to fetch" in the console. Real
+      // network failures (TypeError) are rethrown exactly as before, so the
+      // offline-cache fallback behaviour is unchanged.
+      if (e instanceof DOMException && e.name === 'AbortError') {
+        return new Response(null, { status: 503, statusText: 'Service Unavailable' });
+      }
       throw e;
     })
   );
