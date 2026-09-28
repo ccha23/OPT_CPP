@@ -766,7 +766,7 @@ $(document).ready(function () {
     // C++ editor: no docstring help, so drop the Shift+Tab-help entry.
     shortcuts: [
       { keys: "Tab", desc: "Indent" },
-      { keys: "Shift + Tab", desc: "Outdent (when the cursor is at the line start)" },
+      { keys: "Shift + Tab", desc: "Outdent the selected line(s)" },
       { keys: "Ctrl/⌘ + Click", desc: "Add a cursor at the click (multi-cursor)" },
       { keys: "Ctrl/⌘ + D", desc: "Select the next occurrence of the current word" },
       { keys: "Ctrl/⌘ + Shift + L", desc: "Select all occurrences of the current word" },
