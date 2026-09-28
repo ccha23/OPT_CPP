@@ -763,6 +763,17 @@ $(document).ready(function () {
       if (target === "visualize") (optLiveFrontend as any).openVisualizeUrl();
       else (optLiveFrontend as any).openLiveModeUrl();
     },
+    // C++ editor: no docstring help, so drop the Shift+Tab-help entry.
+    shortcuts: [
+      { keys: "Tab", desc: "Indent" },
+      { keys: "Shift + Tab", desc: "Outdent (when the cursor is at the line start)" },
+      { keys: "Ctrl/⌘ + Click", desc: "Add a cursor at the click (multi-cursor)" },
+      { keys: "Ctrl/⌘ + D", desc: "Select the next occurrence of the current word" },
+      { keys: "Ctrl/⌘ + Shift + L", desc: "Select all occurrences of the current word" },
+      { keys: "Alt + drag", desc: "Box / rectangular selection" },
+      { keys: "Ctrl/⌘ + Z", desc: "Undo" },
+      { keys: "Ctrl/⌘ + Shift + Z", desc: "Redo" },
+    ],
   });
 
   // Re-paint the CM6 editor's token colors whenever the theme changes.
