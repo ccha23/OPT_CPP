@@ -364,18 +364,22 @@ textarea.bubbleInputText {
 
 /* ========================================================================
    CodeMirror 6 editor — step-arrow gutter images.
-   These background-IMAGE rules MUST live in a real .css file (not a JS theme
-   string) so that css-loader rewrites the relative url() into the hashed
-   asset URL at build time. Both pages (visualize + live) load opt-frontend.css.
+   Inline SVG of the exact Default-Mode vector polygon (0,3 12,3 12,0 18,5
+   12,10 12,7 0,7) with a TRANSPARENT background — the old 22x22 PNGs had an
+   opaque WHITE box baked behind the arrow, which glared on the dark editor.
+   Colors match Default Mode: cur=#e93f34, prev=#c9e6ca. Data-URIs need no
+   css-loader url() rewrite, so these work on both pages (both load
+   opt-frontend.css). NOTE: keep these ONLY here — a bare .curLineStepGutter
+   rule elsewhere (lower specificity) would be dead/overridden.
    ======================================================================== */
 .cm-stepGutter .curLineStepGutter {
-  background-image: url("redarrow.png");
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2018%2010%27%20width=%2718%27%20height=%2710%27%3E%3Cpolygon%20points=%270,3%2012,3%2012,0%2018,5%2012,10%2012,7%200,7%27%20fill=%27%23e93f34%27/%3E%3C/svg%3E");
 }
 .cm-stepGutter .prevLineStepGutter {
-  background-image: url("lightgreenarrow.png");
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2018%2010%27%20width=%2718%27%20height=%2710%27%3E%3Cpolygon%20points=%270,3%2012,3%2012,0%2018,5%2012,10%2012,7%200,7%27%20fill=%27%23c9e6ca%27/%3E%3C/svg%3E");
 }
 .cm-stepGutter .curPrevOverlapLineStepGutter {
-  background-image: url("redgreenarrow.png");
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2018%2022%27%20width=%2718%27%20height=%2722%27%3E%3Cg%20transform=%27translate(0,1)%27%3E%3Cpolygon%20points=%270,3%2012,3%2012,0%2018,5%2012,10%2012,7%200,7%27%20fill=%27%23c9e6ca%27/%3E%3C/g%3E%3Cg%20transform=%27translate(0,11)%27%3E%3Cpolygon%20points=%270,3%2012,3%2012,0%2018,5%2012,10%2012,7%200,7%27%20fill=%27%23e93f34%27/%3E%3C/g%3E%3C/svg%3E");
 }
 
 /* Make sure the code editor container is a real block that CM6 can fill. */
