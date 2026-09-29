@@ -773,6 +773,7 @@ $(document).ready(function () {
       { keys: "Alt + drag", desc: "Box / rectangular selection" },
       { keys: "Ctrl/⌘ + Z", desc: "Undo" },
       { keys: "Ctrl/⌘ + Shift + Z", desc: "Redo" },
+      { keys: "Esc", desc: "Close the autocomplete / find popup" },
     ],
   });
 
